@@ -1,0 +1,134 @@
+```html id="klw92c"
+<!DOCTYPE html>
+<html>
+<head>
+<title>Puzzle Game</title>
+
+<style>
+
+body{
+font-family:Arial;
+text-align:center;
+background:#f2f2f2;
+}
+
+h1{
+margin-top:20px;
+}
+
+#board{
+width:300px;
+margin:auto;
+display:grid;
+grid-template-columns:repeat(3,100px);
+grid-gap:5px;
+}
+
+.tile{
+width:100px;
+height:100px;
+background:#3498db;
+color:white;
+font-size:30px;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+}
+
+.empty{
+background:#ddd;
+cursor:default;
+}
+
+button{
+margin-top:20px;
+padding:10px 20px;
+font-size:16px;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>Sliding Puzzle Game</h1>
+
+<div id="board"></div>
+
+<button onclick="shuffle()">Shuffle</button>
+
+<script>
+
+let tiles=[1,2,3,4,5,6,7,8,""];
+
+function drawBoard(){
+
+const board=document.getElementById("board");
+board.innerHTML="";
+
+tiles.forEach((value,index)=>{
+
+let tile=document.createElement("div");
+
+tile.className="tile";
+
+if(value===""){
+tile.classList.add("empty");
+}
+
+tile.innerText=value;
+
+tile.onclick=function(){
+moveTile(index);
+};
+
+board.appendChild(tile);
+
+});
+
+}
+
+function moveTile(index){
+
+let emptyIndex=tiles.indexOf("");
+
+let validMoves=[index-1,index+1,index-3,index+3];
+
+if(validMoves.includes(emptyIndex)){
+
+[tiles[index],tiles[emptyIndex]]=[tiles[emptyIndex],tiles[index]];
+
+drawBoard();
+
+checkWin();
+
+}
+
+}
+
+function shuffle(){
+
+tiles.sort(()=>Math.random()-0.5);
+
+drawBoard();
+
+}
+
+function checkWin(){
+
+let win=[1,2,3,4,5,6,7,8,""];
+
+if(JSON.stringify(tiles)===JSON.stringify(win)){
+alert("🎉 You solved the puzzle!");
+}
+
+}
+
+drawBoard();
+
+</script>
+
+</body>
+</html>
+```
